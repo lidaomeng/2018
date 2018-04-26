@@ -8,7 +8,7 @@
 #include <string>
 using namespace std;
 
-std::mutex m_Mutex;
+std::mutex g_Mutex;
 
 class Person{
 private:
@@ -51,12 +51,12 @@ T* Singleton<T>::m_pInstance = nullptr;
 template <class T>
 T* Singleton<T>::GetInstance() {
     if(m_pInstance == nullptr){
-        m_Mutex.lock();
+        g_Mutex.lock();
         if(m_pInstance == nullptr){ // Note: 双判断
             T* pTemp = new T(); // Note: 临时指针
             m_pInstance = pTemp;
         }
-        m_Mutex.unlock();
+        g_Mutex.unlock();
     }
     return m_pInstance;
 }
@@ -64,12 +64,12 @@ T* Singleton<T>::GetInstance() {
 template <class T>
 void Singleton<T>::DeleteInstance() {
     if(m_pInstance != nullptr){
-        m_Mutex.lock();
+        g_Mutex.lock();
         if(m_pInstance != nullptr){ // Note: 再次判断指针是否为空，否则会出现释放空指针现象
             delete m_pInstance;
             m_pInstance = nullptr;
         }
-        m_Mutex.unlock();
+        g_Mutex.unlock();
     }
 }
 
