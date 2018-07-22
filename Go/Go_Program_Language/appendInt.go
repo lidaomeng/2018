@@ -2,6 +2,20 @@ package main
 
 import "fmt"
 
+// equal 字典比较
+func equal(x, y map[string]int) bool {
+	if len(x) != len(y) {
+		return false
+	}
+	for k, xv := range x {
+		if yv, ok := y[k]; !ok || yv != xv {
+			return false
+		}
+	}
+	return true
+}
+
+// appendInt 追加元素
 func appendInt(x []int, y int) []int {
 	var z []int
 
