@@ -25,6 +25,7 @@ func (s *IntSet) Add(x int) {
 	s.words[word] |= 1 << bit
 }
 
+// UnionWith 并集
 func (s *IntSet) UnionWith(t *IntSet) {
 	for i, tWord := range t.words {
 		if i < len(s.words) {
